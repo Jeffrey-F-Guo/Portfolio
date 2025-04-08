@@ -60,37 +60,43 @@ const portfolioProjects = [
 // its cool i guess lmao... looks the same, apparently more customizable
 export const ProjectsSection = () => {
   return (
-    <section className="bg-gray-100 py-20">
+    <section className="bg-gray-100 py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-4xl font-bold text-center mt-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mt-6">
           Featured Projects
         </h2>
-        <div className="flex flex-col mt-10 gap-20">
+        <div className="flex flex-col mt-10 md:mt-20 gap-20">
           {portfolioProjects.map((project) => (
-            <div key={project.title} className="px-8 pt-8 rounded-3xl bg-black/10 border-2 border-black overflow-hidden">
-              <span>{project.company}</span>
-              <span> . </span>
-              <span>{project.year}</span>
-              <h3 className="text-2xl font-semibold mt-2">{project.title}</h3>
-              <hr className="border-black/80 border-t-2 mt-4"/>
-              <ul className="flex flex-col gap-4 mt-4">
-                {project.results.map((result) => (
-                  <li className="flex gap-2 text-sm text-black/70">
-                    <Check className="size-5"/>
-                    <span>{result.title}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href={project.link}>
-                <button className="bg-black rounded-xl text-white h-12
-                font-semibold w-full inline-flex items-center justify-center gap-2 mt-8">
-                  <span>View Github</span>
-                  <ArrowUpRight className="size-5"/>
-                </button>
-              </a>
-              <Image src={project.image} alt={project.title}
-              className="mt-8 -mb-4"/>
 
+            <div key={project.title} className="px-8 pt-8 md:pt-12 md:px-10 lg:pt-16 lg:px-20 rounded-3xl bg-black/10 border-2 border-black overflow-hidden relative">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+                <div className="lg:mb-16">
+                  <span>{project.company}</span>
+                  <span> . </span>
+                  <span>{project.year}</span>
+                  <h3 className="text-2xl md:text-4xl lg:text-5xl font-semibold mt-2 md:mt-4">{project.title}</h3>
+                  <hr className="border-black/80 border-t-2 mt-4 md:mt-5"/>
+                  <ul className="flex flex-col gap-4 mt-4 md:mt-5">
+                    {project.results.map((result) => (
+                      <li className="flex gap-2 text-sm md:text-base text-black/70">
+                        <Check className="size-5 md:size-6"/>
+                        <span>{result.title}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href={project.link}>
+                    <button className="bg-black rounded-xl text-white h-12
+                    font-semibold w-full md:w-auto md:px-6 inline-flex items-center justify-center gap-2 mt-8">
+                      <span>View Github</span>
+                      <ArrowUpRight className="size-5"/>
+                    </button>
+                  </a>
+                </div>
+                <div className="relative">
+                  <Image src={project.image} alt={project.title}
+                  className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none"/>
+                </div>
+              </div>
             </div>
           ))}
         </div>
