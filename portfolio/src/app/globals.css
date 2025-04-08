@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .nav-item {
+        @apply px-4 py-1.5 text-sm font-semibold rounded-full text-black hover:bg-black/10 hover:text-black transition duration-300
+
+    }
+}
