@@ -5,6 +5,7 @@ import map from "@/assets/images/map.png";
 import Image from "next/image";
 import Check from "@/assets/icons/check-circle.svg";
 import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import {Card} from "@/components/Card";
 
 const portfolioProjects = [
   {
@@ -16,7 +17,7 @@ const portfolioProjects = [
       { title: "Improved site speed by 50%" },
       { title: "Increased mobile traffic by 35%" },
     ],
-    link: "https://youtu.be/4k7IdSLxh6w",
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     image: darkSaasLandingPage,
   },
   {
@@ -28,7 +29,7 @@ const portfolioProjects = [
       { title: "Expanded customer reach by 35%" },
       { title: "Increased brand awareness by 15%" },
     ],
-    link: "https://youtu.be/7hi5zwO75yc",
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     image: lightSaasLandingPage,
   },
   {
@@ -40,7 +41,7 @@ const portfolioProjects = [
       { title: "Improved site speed by 50%" },
       { title: "Increased mobile traffic by 35%" },
     ],
-    link: "https://youtu.be/Z7I5uSRHMHg",
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     image: aiStartupLandingPage,
   },
   {
@@ -52,7 +53,7 @@ const portfolioProjects = [
       { title: "Improved site speed by 50%" },
       { title: "Increased recommendation quality by 50% over the spotify API" },
     ],
-    link: "",
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     image: map,
   },
 ];
@@ -60,15 +61,14 @@ const portfolioProjects = [
 // its cool i guess lmao... looks the same, apparently more customizable
 export const ProjectsSection = () => {
   return (
-    <section className="bg-gray-100 py-16 lg:py-20">
-      <div className="container">
+    <section className="bg-gray-100 py-16 lg:py-20 lg:pb-24 border border-black">
+      <div className="container flex flex-col justify-center">
         <h2 className="text-4xl md:text-5xl font-bold text-center mt-6">
           Featured Projects
         </h2>
-        <div className="flex flex-col mt-10 md:mt-20 gap-20">
+        <div className="flex flex-col mt-10 mb-6 md:mt-20 gap-20">
           {portfolioProjects.map((project) => (
-
-            <div key={project.title} className="px-8 pt-8 md:pt-12 md:px-10 lg:pt-16 lg:px-20 rounded-3xl bg-black/10 border-2 border-black overflow-hidden relative">
+            <Card key={project.title} className="px-8 pt-8 md:pt-12 md:px-10 lg:pt-16 lg:px-20">
               <div className="lg:grid lg:grid-cols-2 lg:gap-16">
                 <div className="lg:mb-16">
                   <span>{project.company}</span>
@@ -84,12 +84,10 @@ export const ProjectsSection = () => {
                       </li>
                     ))}
                   </ul>
-                  <a href={project.link}>
-                    <button className="bg-black rounded-xl text-white h-12
+                  <a href={project.link} className="bg-black rounded-xl text-white h-12
                     font-semibold w-full md:w-auto md:px-6 inline-flex items-center justify-center gap-2 mt-8">
-                      <span>View Github</span>
-                      <ArrowUpRight className="size-5"/>
-                    </button>
+                    <span>View Github</span>
+                    <ArrowUpRight className="size-5"/>
                   </a>
                 </div>
                 <div className="relative">
@@ -97,7 +95,7 @@ export const ProjectsSection = () => {
                   className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none"/>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
