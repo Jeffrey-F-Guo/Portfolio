@@ -2,9 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@layer components {
     .nav-item {
-        @apply px-4 py-1.5 text-sm font-semibold rounded-full text-black hover:bg-black/10 hover:text-black transition duration-300
+        @apply px-4 py-1.5 text-sm font-semibold rounded-full text-black hover:bg-black/10 hover:text-black transition-transform duration-300 transform hover:scale-105
 
     }
 }
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }

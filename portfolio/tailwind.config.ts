@@ -20,7 +20,13 @@ const config: Config = {
         md: "2rem",
       },
     },
-    extend: {},
+
+    extend: {
+      colors: {
+        "custom-gray-dark": "#DADBDD",
+        "custom-gray-light": "#E5E5E5"
+      },
+    },
   },
   plugins: [],
 };

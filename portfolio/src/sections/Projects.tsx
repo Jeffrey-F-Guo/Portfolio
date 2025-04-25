@@ -10,10 +10,10 @@ import {Card} from "@/components/Card";
 const portfolioProjects = [
   {
     company: "Acme Corp",
-    year: "2022",
-    title: "Dark Saas Landing Page",
+    year: "2025",
+    title: "Pairwise Speaker Identification",
     results: [
-      { title: "Enhanced user experience by 40%" },
+      { title: "Achieved over 93% Accuracy" },
       { title: "Improved site speed by 50%" },
       { title: "Increased mobile traffic by 35%" },
     ],
@@ -23,7 +23,7 @@ const portfolioProjects = [
   {
     company: "Innovative Co",
     year: "2021",
-    title: "Light Saas Landing Page",
+    title: "Meal Genie",
     results: [
       { title: "Boosted sales by 20%" },
       { title: "Expanded customer reach by 35%" },
@@ -35,7 +35,7 @@ const portfolioProjects = [
   {
     company: "Quantum Dynamics",
     year: "2023",
-    title: "AI Startup Landing Page",
+    title: "Neural Network",
     results: [
       { title: "Enhanced user experience by 40%" },
       { title: "Improved site speed by 50%" },
@@ -59,16 +59,20 @@ const portfolioProjects = [
 ];
 // <div key={project.title} className="p-8 rounded-3xl border bg-black/10 relative z-0 overflow-hidden after:z-10 after:content[''] after:absolute after:inset-0 after:outline-2 after:outline after:-outline-offset-2 after:rounded-3xl">
 // its cool i guess lmao... looks the same, apparently more customizable
+// style={{
+//   top: `calc(160px + ${projectIndex * 10}px)`
+// }}
 export const ProjectsSection = () => {
   return (
-    <section className="bg-gray-100 py-16 lg:py-20 lg:pb-24 border border-black">
-      <div className="container flex flex-col justify-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mt-6">
+    <section id="projects" className="bg-gray-100 py-16 lg:py-20 lg:pb-24">
+      <div className="container flex flex-col">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mt-6 top-20">
           Featured Projects
         </h2>
-        <div className="flex flex-col mt-10 mb-6 md:mt-20 gap-20">
+        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar mt-10 mb-6 md:mt-20 gap-5">
           {portfolioProjects.map((project) => (
-            <Card key={project.title} className="px-8 pt-8 md:pt-12 md:px-10 lg:pt-16 lg:px-20">
+            <Card key={project.title} className="px-8 pt-8 md:pt-12 md:px-10 h-[500px] md:h-[700px] lg:h-[500px] flex-shrink-0 w-[80%] lg:pt-16 lg:px-20
+            snap-center hover:scale-100 scale-95 transition duration-200">
               <div className="lg:grid lg:grid-cols-2 lg:gap-16">
                 <div className="lg:mb-16">
                   <span>{project.company}</span>
@@ -90,9 +94,9 @@ export const ProjectsSection = () => {
                     <ArrowUpRight className="size-5"/>
                   </a>
                 </div>
-                <div className="relative">
+                <div className="relative h-full lg:overflow-visible">
                   <Image src={project.image} alt={project.title}
-                  className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none"/>
+                  className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none lg:object-contain lg:object-left-top"/>
                 </div>
               </div>
             </Card>

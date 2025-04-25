@@ -1,14 +1,19 @@
 import {twMerge} from "tailwind-merge";
-import { PropsWithChildren } from "react";
 
+type CardProps = {
+    className : string;
+    children?: React.ReactNode;
+    style?: React.CSSProperties;
+}
 export const Card = ({
     className, 
-    children
-} : 
-    PropsWithChildren<{ className? : string}>) => {
+    children,
+    style
+} : CardProps) => {
     return (
         <div 
-            className={twMerge("rounded-3xl bg-black/10 border-2 border-black overflow-hidden relative", className)}>
+            className={twMerge("rounded-3xl bg-custom-gray-dark border-2 border-black overflow-hidden relative", className)}
+            style={style}>
             {children}
         </div>
 
