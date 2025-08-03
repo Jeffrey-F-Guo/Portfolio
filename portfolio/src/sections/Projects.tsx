@@ -82,7 +82,7 @@ export const ProjectsSection = () => {
                   <hr className="border-black/80 border-t-2 mt-4 md:mt-5"/>
                   <ul className="flex flex-col gap-4 mt-4 md:mt-5">
                     {project.results.map((result) => (
-                      <li className="flex gap-2 text-sm md:text-base text-black/70">
+                      <li key="" className="flex gap-2 text-sm md:text-base text-black/70">
                         <Check className="size-5 md:size-6"/>
                         <span>{result.title}</span>
                       </li>
