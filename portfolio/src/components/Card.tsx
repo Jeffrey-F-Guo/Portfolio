@@ -12,11 +12,9 @@ export const Card = ({
 } : CardProps) => {
     return (
         <div 
-            className={twMerge("rounded-3xl bg-custom-gray-dark border-2 border-black overflow-hidden relative", className)}
+            className={twMerge("rounded-2xl bg-white border border-black/5 overflow-hidden relative shadow-sm", className)}
             style={style}>
             {children}
         </div>
-
-
     )
 } 

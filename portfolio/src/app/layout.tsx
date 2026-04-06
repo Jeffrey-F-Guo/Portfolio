@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ScrollAnimator } from "@/components/ScrollAnimator";
+import { GlowingOrbs } from "@/components/GlowingOrbs";
 
 export const metadata: Metadata = {
   title: "Jeffrey's Portfolio",
@@ -13,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-white text-black">{children}</body>
+      <body className="antialiased">
+        <GlowingOrbs />
+        <ScrollAnimator />
+        {children}
+      </body>
     </html>
   );
 }
