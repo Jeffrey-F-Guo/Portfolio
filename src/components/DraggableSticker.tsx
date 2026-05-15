@@ -7,11 +7,10 @@ interface Props {
   defaultPos: () => { x: number; y: number };
   width: number;
   rotation: number;
-  pinned?: boolean;
-  onTogglePin?: () => void;
+  onDelete?: () => void;
 }
 
-export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation, pinned = true, onTogglePin }: Props) => {
+export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation, onDelete }: Props) => {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [dragging, setDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -21,7 +20,13 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
-      try { setPos(JSON.parse(saved)); return; } catch {}
+      try {
+        const parsed = JSON.parse(saved);
+        const inBounds =
+          parsed.x >= 0 && parsed.x < window.innerWidth &&
+          parsed.y >= 0 && parsed.y < window.innerHeight;
+        if (inBounds) { setPos(parsed); return; }
+      } catch {}
     }
     setPos(defaultPos());
   }, [storageKey]);
@@ -32,20 +37,17 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
     localStorage.setItem(storageKey, JSON.stringify(pos));
   }, [dragging, pos, storageKey]);
 
-  const scrollX = () => (pinned ? 0 : window.scrollX);
-  const scrollY = () => (pinned ? 0 : window.scrollY);
-
   // Mouse drag
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     setDragging(true);
-    offset.current = { x: e.clientX + scrollX() - (pos?.x ?? 0), y: e.clientY + scrollY() - (pos?.y ?? 0) };
+    offset.current = { x: e.clientX + window.scrollX - (pos?.x ?? 0), y: e.clientY + window.scrollY - (pos?.y ?? 0) };
   };
 
   useEffect(() => {
     if (!dragging) return;
     const onMove = (e: MouseEvent) =>
-      setPos({ x: e.clientX + scrollX() - offset.current.x, y: e.clientY + scrollY() - offset.current.y });
+      setPos({ x: e.clientX + window.scrollX - offset.current.x, y: e.clientY + window.scrollY - offset.current.y });
     const onUp = () => setDragging(false);
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
@@ -59,7 +61,7 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
   const onTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0];
     setDragging(true);
-    offset.current = { x: t.clientX + scrollX() - (pos?.x ?? 0), y: t.clientY + scrollY() - (pos?.y ?? 0) };
+    offset.current = { x: t.clientX + window.scrollX - (pos?.x ?? 0), y: t.clientY + window.scrollY - (pos?.y ?? 0) };
   };
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
     const onMove = (e: TouchEvent) => {
       e.preventDefault();
       const t = e.touches[0];
-      setPos({ x: t.clientX + scrollX() - offset.current.x, y: t.clientY + scrollY() - offset.current.y });
+      setPos({ x: t.clientX + window.scrollX - offset.current.x, y: t.clientY + window.scrollY - offset.current.y });
     };
     const onUp = () => setDragging(false);
     window.addEventListener("touchmove", onMove, { passive: false });
@@ -84,11 +86,10 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
     <div
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}
-      onDoubleClick={onTogglePin}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        position: pinned ? "fixed" : "absolute",
+        position: "absolute",
         left: pos.x,
         top: pos.y,
         width: width,
@@ -109,23 +110,22 @@ export const DraggableSticker = ({ src, storageKey, defaultPos, width, rotation,
         style={{ width: "100%", display: "block" }}
       />
 
-      {/* Pin indicator */}
-      <div
-        title={pinned ? "pinned · double-click to unpin" : "unpinned · double-click to pin"}
-        style={{
-          position: "absolute",
-          top: -4,
-          right: -4,
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: pinned ? "rgba(0,0,0,0.45)" : "transparent",
-          border: "1.5px solid rgba(0,0,0,0.3)",
-          opacity: hovered || !pinned ? 1 : 0.4,
-          transition: "opacity 0.2s, background 0.2s",
-          pointerEvents: "none",
-        }}
-      />
+      {/* Delete button */}
+      {hovered && onDelete && (
+        <button
+          onMouseDown={e => e.stopPropagation()}
+          onClick={e => { e.stopPropagation(); onDelete(); }}
+          style={{
+            position: "absolute", top: -6, left: -6,
+            width: 16, height: 16, borderRadius: "50%",
+            background: "rgba(0,0,0,0.55)", color: "white",
+            border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 10, lineHeight: 1, pointerEvents: "all",
+          }}
+        >×</button>
+      )}
+
     </div>
   );
 };

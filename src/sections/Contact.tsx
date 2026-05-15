@@ -12,7 +12,7 @@ export const ContactSection = () => {
 
         <div className="flex flex-col gap-4 animate-on-scroll">
           <p className="text-sm text-black/50 max-w-sm leading-relaxed">
-            Open to interesting problems. I also reply faster than most people expect.
+            Open to new opportunities, research collaborations, and engineering discussions.
           </p>
 
           <div className="flex flex-wrap gap-6 mt-1">
@@ -39,7 +39,9 @@ export const ContactSection = () => {
               linkedin
             </a>
             <a
-              href="#"
+              href="/Jeffrey_Guo_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-mono text-xs text-black/40 hover:text-black transition-colors"
             >
               resume

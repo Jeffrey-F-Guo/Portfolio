@@ -10,7 +10,7 @@ const allExperiences = [
     location: "San Jose, CA",
     description:
       "Incoming SWE intern on the AI-Application Delivery Controller team.",
-    tech: ["Go", "C", "AI/ML", "Networking"],
+    tech: ["Python", "C", "AI/ML", "Networking"],
     featured: true,
   },
   {
@@ -40,13 +40,17 @@ type ExperienceSectionProps = {
 };
 
 export const ExperienceSection = ({ fullPage = false }: ExperienceSectionProps) => {
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const experiences = fullPage
     ? allExperiences
     : allExperiences.filter((e) => e.featured);
 
   const toggle = (key: string) =>
-    setExpanded((prev) => (prev === key ? null : key));
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(key) ? next.delete(key) : next.add(key);
+      return next;
+    });
 
   return (
     <section id="experience" className="py-14 border-t border-black/8">
@@ -85,12 +89,12 @@ export const ExperienceSection = ({ fullPage = false }: ExperienceSectionProps) 
 
                   <ArrowRight
                     className={`size-3 text-black/20 shrink-0 transition-transform duration-150 ${
-                      expanded === key ? "rotate-90" : ""
+                      expanded.has(key) ? "rotate-90" : ""
                     }`}
                   />
                 </div>
 
-                {expanded === key && (
+                {expanded.has(key) && (
                   <div className="pb-4 px-3 pl-14 animate-fade-in">
                     <p className="text-xs text-black/30 font-mono mb-2">{exp.location}</p>
                     <p className="text-sm text-black/50 leading-relaxed mb-3">

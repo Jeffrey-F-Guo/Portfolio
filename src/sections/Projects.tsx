@@ -8,8 +8,7 @@ const allProjects = [
     year: "2026",
     title: "Agentic Code Reviewer",
     description:
-      "Six AI agents reviewing your PRs in parallel. ReAct loops, tool calls, Cloudflare Workflows with durable per-step retries, and cross-agent messaging. Persists review history per repo and does conversational follow-up. Works better than I expected it to.",
-    metric: "6 parallel agents",
+      "Multi-agent code review system built on Cloudflare Workers AI. Six specialized agents run in parallel using ReAct loops and tool calls, coordinated via Cloudflare Workflows with durable per-step retries and cross-agent messaging. Maintains persistent review history per repository with conversational follow-up.",
     link: "https://github.com/Jeffrey-F-Guo/cf_ai_prism",
     tags: ["TypeScript", "Cloudflare Workers", "React", "PostgreSQL"],
     featured: true,
@@ -18,18 +17,16 @@ const allProjects = [
     year: "2026",
     title: "TCP Load Testing Engine",
     description:
-      "Wanted to understand what actually happens at the socket layer. Turns out: a lot. Concurrent C server with a mutex/condvar ring buffer across ten worker threads, a Python load generator with exponential interarrival times, and a custom 18-byte binary protocol with manual serialization.",
-    metric: "10 worker threads",
+      "High-throughput TCP load testing engine built from the socket layer. Concurrent C server using a mutex/condvar ring buffer across ten worker threads, a Python load generator with exponential interarrival times, and a custom 18-byte binary protocol with manual serialization.",
     link: "https://github.com/Jeffrey-F-Guo",
-    tags: ["C", "Python", "FastAPI", "Systems"],
+    tags: ["C", "Python", "Systems"],
     featured: true,
   },
   {
     year: "2025",
     title: "Serverless Receipt Scanner",
     description:
-      "Point, scan, done — no backend running 24/7. S3 presigned URLs for direct browser-to-cloud storage, Textract with Pydantic validation for structured extraction, and a single WebSocket connection handling 50 uploads simultaneously. No polling.",
-    metric: "50 concurrent uploads",
+      "Serverless receipt processing pipeline with no persistent backend. S3 presigned URLs for direct browser-to-cloud uploads, AWS Textract with Pydantic validation for structured data extraction, and a WebSocket connection supporting 50 concurrent uploads.",
     link: "https://github.com/Jeffrey-F-Guo/receipt-scanner",
     tags: ["TypeScript", "React", "AWS", "Python"],
     featured: true,
@@ -38,8 +35,7 @@ const allProjects = [
     year: "2025",
     title: "Long-Context LLM Research (NeurIPS '25)",
     description:
-      "Built a hierarchical memory store that cut hallucination rates from 52% to 6.8% in long-context agentic sessions. Accepted to NeurIPS 2025 Responsible Foundation Models Workshop. Second author.",
-    metric: "52% → 6.8% hallucination",
+      "Hierarchical memory store that reduced hallucination rates from 52% to 6.8% in long-context agentic sessions. Accepted to the NeurIPS 2025 Responsible Foundation Models Workshop. Second author.",
     link: "https://github.com/Jeffrey-F-Guo/SJ-OANT",
     tags: ["Python", "LLMs", "Research"],
     featured: false,
@@ -48,8 +44,7 @@ const allProjects = [
     year: "2024",
     title: "PathForge",
     description:
-      "Won Best Use of Cloudflare AI at DubHacks 2024. Built fast enough that we weren't sure it would hold together — it did.",
-    metric: "Best Use of CF AI",
+      "AI-powered career development platform. Won Best Use of Cloudflare AI at DubHacks 2024.",
     link: "https://github.com/Jeffrey-F-Guo/PathForge",
     tags: ["TypeScript", "Cloudflare", "AI"],
     featured: false,
@@ -61,11 +56,15 @@ type ProjectsSectionProps = {
 };
 
 export const ProjectsSection = ({ fullPage = false }: ProjectsSectionProps) => {
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const projects = fullPage ? allProjects : allProjects.filter((p) => p.featured);
 
   const toggle = (title: string) =>
-    setExpanded((prev) => (prev === title ? null : title));
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(title) ? next.delete(title) : next.add(title);
+      return next;
+    });
 
   return (
     <section id="projects" className="py-14">
@@ -115,29 +114,18 @@ export const ProjectsSection = ({ fullPage = false }: ProjectsSectionProps) => {
                   ))}
                 </div>
 
-                <span className="font-mono text-xs text-black/35 shrink-0 hidden sm:block w-32 text-right">
-                  {project.metric}
-                </span>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <ArrowRight
-                    className={`size-3 text-black/20 transition-transform duration-150 ${
-                      expanded === project.title ? "rotate-90" : ""
-                    }`}
-                  />
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-black/20 hover:text-black transition-colors"
-                  >
-                    <ArrowUpRight className="size-3.5" />
-                  </a>
-                </div>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-black/20 hover:text-black transition-colors shrink-0"
+                >
+                  <ArrowUpRight className="size-3.5" />
+                </a>
               </div>
 
-              {expanded === project.title && (
+              {expanded.has(project.title) && (
                 <div className="pb-4 px-3 pl-14 animate-fade-in">
                   <p className="text-sm text-black/50 leading-relaxed mb-3">
                     {project.description}

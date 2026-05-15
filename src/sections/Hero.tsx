@@ -3,7 +3,7 @@ import { Scroll } from "@/components/ScrollToElement";
 
 export const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-[88vh] flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-[55vh] flex items-center overflow-hidden">
       {/* Watermark */}
       <div className="absolute inset-0 flex items-center justify-start pointer-events-none select-none overflow-hidden">
         <span className="font-bold text-[22vw] leading-none text-black opacity-[0.025] -ml-2">
@@ -23,11 +23,12 @@ export const HeroSection = () => {
 
           <p className="text-base text-black/55 max-w-xl leading-relaxed animate-fade-in delay-200">
             CS student at{" "}
-            <span className="text-black font-medium">WWU</span>.
-            {" "}Somehow ended up co-authoring a NeurIPS &apos;25 paper.
+            <span className="text-black font-medium">WWU</span>{" "}
+            focused on backend infrastructure and applied AI.
+            Co-authored research accepted to NeurIPS &apos;25.
             Previously at{" "}
-            <span className="text-black font-medium">Fisher Investments</span>,
-            heading to <span className="text-black font-medium">A10 Networks</span> this summer.
+            <span className="text-black font-medium">Fisher Investments</span>{" "}
+            — joining <span className="text-black font-medium">A10 Networks</span> this summer.
           </p>
 
           <div className="flex items-center gap-6 text-sm animate-fade-in delay-300">
