@@ -1,11 +1,11 @@
 const skillGroups = [
   {
     label: "Languages",
-    items: ["Python", "TypeScript", "JavaScript", "C/C++", "Golang", "C#", "Java", "PostgreSQL"],
+    items: ["Python", "TypeScript", "JavaScript", "C/C++", "Golang", "C#", "Java", "SQL"],
   },
   {
     label: "Cloud & DevOps",
-    items: ["Cloudflare", "AWS", "Azure", "Docker", "Linux/Unix", "CI/CD", "Git"],
+    items: ["AWS", "Azure", "GCP", "Docker", "Linux/Unix", "CI/CD", "Git", "Cloudflare"],
   },
   {
     label: "Frameworks",
@@ -13,7 +13,7 @@ const skillGroups = [
   },
   {
     label: "ML / AI",
-    items: ["PyTorch", "LLM Systems", "Agentic AI", "RAG", "NumPy"],
+    items: ["PyTorch", "LangChain", "Hugging Face", "Agentic AI", "RAG", "NumPy"],
   },
 ];
 

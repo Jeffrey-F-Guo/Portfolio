@@ -2,48 +2,56 @@
 import { useState } from "react";
 import ArrowRight from "@/assets/icons/arrow-right.svg";
 
-const allExperiences = [
+const experiences = [
   {
-    period: "Jun – Sep 2026",
+    period: "Jun 2026 – Present",
     role: "Software Engineer Intern",
     company: "A10 Networks",
     location: "San Jose, CA",
     description:
       "Incoming SWE intern on the AI-Application Delivery Controller team.",
     tech: ["Python", "C", "AI/ML", "Networking"],
-    featured: true,
   },
   {
-    period: "Jul – Nov 2025",
+    period: "May 2025 – Present",
+    role: "Robotics Researcher",
+    company: "MRRP Lab (WWU)",
+    location: "Bellingham, WA",
+    description:
+      "Building a decentralized coordination system for drone swarms. Motivated by bringing autonomous campus delivery to WWU. Each drone runs the full coordination stack independently — leader election, failure detection, and formation control peer-to-peer over a bandwidth-constrained radio link. Implemented in ROS2 on Crazyflie hardware.",
+    tech: ["Python", "ROS2", "C++"],
+  },
+  {
+    period: "Sept 2024 – Present",
+    role: "Computational Neuroscience Researcher",
+    company: "Glomerulus Research Lab (WWU)",
+    location: "Bellingham, WA",
+    description:
+      "Led computational development of a hippocampal seizure model in Brian2 as the primary contributor, with simulation results matching experimental data from the Kaplan Lab @ WWU. Owned model visualization (raster plots, LFP signals, neuron spikes), synchrony metric development involving signal processing (autocorrelation, Kuramoto Order Parameter), and data processing. Reduced simulation memory footprint from 7GB to 100KB by precomputing and persisting only derived metrics post-simulation.",
+    tech: ["Python", "Numpy", "Brian2 Simulator"],
+  },
+  {
+    period: "Jul 2025 – Nov 2025",
     role: "Machine Learning Researcher",
     company: "Algoverse",
     location: "Remote",
     description:
       "Second author on long-context agentic LLM systems research accepted to NeurIPS 2025 Responsible Foundation Models Workshop. Reduced hallucination rates from 52% to 6.8% by building a hierarchical memory store to enforce accurate state management across long-context sessions.",
-    tech: ["Python", "PyTorch", "LLMs", "Research"],
-    featured: true,
+    tech: ["Python", "LangChain", "LLMs", "Hugging Face"],
   },
   {
-    period: "Jun – Aug 2025",
+    period: "Jun 2025 – Aug 2025",
     role: "Software Engineer Intern",
     company: "Fisher Investments",
     location: "Camas, WA",
     description:
-      "Orchestrated a Salesforce ETL pipeline to migrate 2M+ datapoints, achieving millions of records/hour throughput and eliminating 15 hours of weekly manual processing. Optimized average data query time by 90% by unifying 6 isolated datasets into a single data model. Constructed a serverless ingestion architecture using C# Azure Functions with Microsoft Defender integration for real-time malware scanning.",
-    tech: ["C#", "Azure", "Python", "SQL", "Salesforce"],
-    featured: true,
+      "Designed and executed a full data migration of 2M+ data points from legacy Excel-based systems to Salesforce via nightly ETL pipeline, eliminating 15+ hours of weekly manual spreadsheet processing. Designed and implemented a Salesforce data model across 6 objects, replacing siloed spreadsheets to enable first-time campaign performance analysis and serve as the foundation for downstream marketing reporting. Constructed a serverless ingestion architecture using C# Azure Functions to handle secure PDF uploads, integrating Microsoft Defender for real-time malware scanning.",
+    tech: ["C#", "Azure", "SQL", "Salesforce"],
   },
 ];
 
-type ExperienceSectionProps = {
-  fullPage?: boolean;
-};
-
-export const ExperienceSection = ({ fullPage = false }: ExperienceSectionProps) => {
+export const ExperienceSection = () => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const experiences = fullPage
-    ? allExperiences
-    : allExperiences.filter((e) => e.featured);
 
   const toggle = (key: string) =>
     setExpanded((prev) => {
@@ -58,13 +66,18 @@ export const ExperienceSection = ({ fullPage = false }: ExperienceSectionProps) 
         <div className="flex items-center gap-3 mb-7 animate-on-scroll">
           <span className="font-mono text-xs text-black/35">[02]</span>
           <span className="font-mono text-xs font-semibold uppercase tracking-widest text-black/35">
-            {fullPage ? "All Experience" : "Experience"}
+            Experience
           </span>
           <div className="flex-1 border-t border-black/10" />
         </div>
 
         <div>
-          {experiences.map((exp) => {
+          {[...experiences].sort((a, b) => {
+            const aPresent = a.period.includes("Present");
+            const bPresent = b.period.includes("Present");
+            if (aPresent !== bPresent) return aPresent ? -1 : 1;
+            return Number(b.period.match(/\d{4}/)?.[0]) - Number(a.period.match(/\d{4}/)?.[0]);
+          }).map((exp) => {
             const key = `${exp.company}-${exp.period}`;
             return (
               <div

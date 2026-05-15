@@ -14,9 +14,10 @@ const navItems = [
 export const Header = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const activeSection = useActiveSection(navItems.map((item) => item.id));
+  const { activeSection, lockSection } = useActiveSection(navItems.map((item) => item.id));
 
   const handleNavClick = (id: string) => {
+    lockSection(id);
     if (id === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
