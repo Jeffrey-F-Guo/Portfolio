@@ -174,7 +174,7 @@ const StickersBank = ({ activeStickers, onAdd }: StickersBankProps) => {
 // ── Home ───────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [stickersVisible, setStickersVisible] = useState(true);
+  const [stickersVisible, setStickersVisible] = useState(false);
   const [activeStickers, setActiveStickers] = useState<Set<string>>(
     new Set(["gojocat", "smiski", "mofucat"])
   );
