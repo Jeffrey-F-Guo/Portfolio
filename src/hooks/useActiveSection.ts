@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState<string>("home");
+  const lockedUntil = useRef(0);
+
+  const lockSection = (id: string) => {
+    lockedUntil.current = Date.now() + 800;
+    setActiveSection(id);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      const atBottom =
-        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 5;
-
-      if (atBottom) {
-        setActiveSection(sectionIds[sectionIds.length - 1]);
-        return;
-      }
+      if (Date.now() < lockedUntil.current) return;
 
       const threshold = window.innerHeight / 3;
       let current = sectionIds[0];
@@ -33,5 +33,5 @@ export function useActiveSection(sectionIds: string[]) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sectionIds]);
 
-  return activeSection;
+  return { activeSection, lockSection };
 }
